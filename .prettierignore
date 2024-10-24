@@ -1,0 +1,9 @@
+# Ignore artifacts:
+build
+coverage
+node_modules
+package-lock.json
+build
+.DS_Store
+CVS
+Thumbs.db
