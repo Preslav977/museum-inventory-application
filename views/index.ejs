@@ -4,9 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
-    <title>Document</title>
+    <title>Museums Inventory Application</title>
   </head>
   <body>
-    <%= title %>
+    <header><%- include('navbar') %></header>
+
+    <main class="museum-main">
+      <% museumsInformation.forEach(museum => { %>
+      <section class="museum-section">
+        <h1><%= museum.name %></h1>
+        <p class="museum-history"><%= museum.history %></p>
+        <a href="/category/<%= museum.category_id %>"
+          ><%= museum.category_name %></a
+        >
+        <div class="image-container">
+          <img src="<%= museum.image_url %>" alt="Museum" />
+        </div>
+        <p><%= museum.city_name %></p>
+        <li>
+          <a href="/museum/<%= museum.id %>">More detail</a>
+        </li>
+      </section>
+
+      <% }) %>
+    </main>
   </body>
 </html>
