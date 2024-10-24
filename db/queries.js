@@ -118,6 +118,47 @@ async function postUpdateCategory(category_name, category_id) {
 
 // Category queries
 
+async function getCityList() {
+  const { rows } = await pool.query("SELECT * FROM city");
+
+  return rows;
+}
+
+async function getCityDetail(city_id) {
+  const { rows } = await pool.query("SELECT * FROM city WHERE city_id = $1", [
+    city_id,
+  ]);
+
+  return rows;
+}
+
+async function searchForCityIfExists(city_name) {
+  const { rows } = await pool.query(
+    "SELECT city_name FROM city WHERE city_name = $1",
+    [city_name]
+  );
+
+  return rows;
+}
+
+async function postCreateCity(city_name, city_image_url) {
+  await pool.query(
+    "INSERT INTO city (city_name, city_image_url) VALUES ($1, $2)",
+    [city_name, city_image_url]
+  );
+}
+
+async function postDeleteCity(city_id) {
+  await pool.query("DELETE FROM city WHERE city_id = $1", [city_id]);
+}
+
+async function postUpdateCity(city_name, city_image_url, city_id) {
+  await pool.query(
+    "UPDATE city SET city_name = $1, city_image_url = $2 WHERE city_id = $3",
+    [city_name, city_image_url, city_id]
+  );
+}
+
 module.exports = {
   getAll,
   getMuseumList,
@@ -133,4 +174,10 @@ module.exports = {
   postCreateCategory,
   postDeleteCategory,
   postUpdateCategory,
+  getCityList,
+  getCityDetail,
+  searchForCityIfExists,
+  postCreateCity,
+  postDeleteCity,
+  postUpdateCity,
 };
