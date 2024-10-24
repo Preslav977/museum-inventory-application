@@ -31,7 +31,9 @@ exports.getCityDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.getCityCreate = asyncHandler(async (req, res, next) => {
-  res.render("cityForm");
+  res.render("cityForm", {
+    links: links,
+  });
 });
 
 const alphaErr = "must container only characters.";
@@ -60,14 +62,17 @@ exports.postCityCreate = [
     );
 
     if (!errors.isEmpty()) {
-      return res.status(400).send(errors.array());
+      return res.status(400).render("cityForm", {
+        links: links,
+        errors: errors.array(),
+      });
     } else {
       if (findCityIfExists) {
         return res.send("City with that name already exists.");
       }
       const postCity = await db.postCreateCity(city_name, city_image_url);
 
-      return res.send("City has been created");
+      return res.redirect("/city");
     }
   }),
 ];
