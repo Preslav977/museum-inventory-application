@@ -35,7 +35,9 @@ exports.getCategoryDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.getCategoryCreate = asyncHandler(async (req, res, next) => {
-  res.render("categoryForm");
+  res.render("categoryForm", {
+    links: links,
+  });
 });
 
 const alphaErr = "must contain only letters.";
@@ -63,13 +65,19 @@ exports.postCategoryCreate = [
     );
 
     if (!errors.isEmpty()) {
-      return res.status(400).send(errors.array());
+      return res.status(400).render("categoryForm", {
+        links: links,
+        errors: errors.array(),
+      });
     } else {
       if (findCategoryIfExists) {
         return res.send("Category with that name already exists");
       }
       const postCategory = await db.postCreateCategory(category_name);
-      return res.send("Category has been created");
+
+      res.redirect("/category");
+
+      return;
     }
   }),
 ];
