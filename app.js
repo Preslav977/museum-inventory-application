@@ -6,9 +6,16 @@ const path = require("node:path");
 
 const indexRouter = require("./routes/indexRouter");
 
+const museumRouter = require("./routes/museumRouter");
+
+const categoryRouter = require("./routes/categoryRouter");
+
+const cityRouter = require("./routes/cityRouter");
+
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
+
 app.set("view engine", "ejs");
 
 app.use(express.json());
@@ -20,6 +27,12 @@ const assetsPath = path.join(__dirname + "/public");
 app.use(express.static(assetsPath));
 
 app.use("/", indexRouter);
+
+app.use("/museum", museumRouter);
+
+app.use("/category", categoryRouter);
+
+app.use("/city", cityRouter);
 
 const PORT = process.env.PORT || 3000;
 
