@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Museum Inventory Application</title>
+  </head>
+  <body>
+    <%- include('navbar') %> <% if (locals.categories) { %>
+    <h1 class="centered-header">All categories</h1>
+    <main class="museum-main">
+      <% categories.forEach(category => { %>
+      <section class="museum-section">
+        <a href="/category/<%= category.category_id %>"
+          ><%= category.category_name %></a
+        >
+      </section>
+      <% }) %>
+    </main>
+    <% } %>
+  </body>
+</html>
