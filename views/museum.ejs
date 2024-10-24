@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Museum Inventory Application</title>
+  </head>
+  <body>
+    <%- include('navbar', {links: links}) %> <% if (locals.museums) { %>
+    <main class="museum-main">
+      <% museums.forEach(museum => { %>
+      <section class="museum-section">
+        <h1><%= museum.name %></h1>
+        <p><%= museum.history %></p>
+        <div class="image-container">
+          <img src="<%= museum.image_url %>" alt="Museum" />
+        </div>
+        <li>
+          <a href="/museum/<%= museum.id %>">More detail</a>
+        </li>
+      </section>
+      <% }) %>
+    </main>
+    <% } %>
+  </body>
+</html>
