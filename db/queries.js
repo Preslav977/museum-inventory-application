@@ -71,6 +71,53 @@ async function postUpdateMuseum(
   );
 }
 
+// Museum queries
+
+async function getCategoryList() {
+  const { rows } = await pool.query("SELECT * FROM category");
+
+  return rows;
+}
+
+async function getCategoryDetail(category_id) {
+  const { rows } = await pool.query(
+    "SELECT * FROM category WHERE category_id = $1",
+    [category_id]
+  );
+
+  return rows;
+}
+
+async function searchForCategoryIfExists(category_name) {
+  const { rows } = await pool.query(
+    "SELECT category_name FROM category WHERE category_name = $1",
+    [category_name]
+  );
+
+  return rows;
+}
+
+async function postCreateCategory(category_name) {
+  await pool.query("INSERT INTO category (category_name) VALUES ($1)", [
+    category_name,
+  ]);
+}
+
+async function postDeleteCategory(category_id) {
+  await pool.query("DELETE FROM category WHERE category_id = $1", [
+    category_id,
+  ]);
+}
+
+async function postUpdateCategory(category_name, category_id) {
+  await pool.query(
+    "UPDATE category SET category_name = $1 WHERE category_id = $2",
+    [category_name, category_id]
+  );
+}
+
+// Category queries
+
 module.exports = {
   getAll,
   getMuseumList,
@@ -80,4 +127,10 @@ module.exports = {
   checkIfMuseumHasAnyRelationships,
   deleteMuseumIfNoRelationships,
   postUpdateMuseum,
+  getCategoryList,
+  getCategoryDetail,
+  searchForCategoryIfExists,
+  postCreateCategory,
+  postDeleteCategory,
+  postUpdateCategory,
 };
