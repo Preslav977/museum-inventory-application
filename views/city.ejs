@@ -12,9 +12,11 @@
     <main class="museum-main">
       <% cities.forEach(city => { %>
       <section class="museum-section">
-        <a href="/city/<%= city.city_id %>"><%= city.city_name %></a>
-        <div>
-          <img src="<%= city.city_image_url %>" alt="City" />
+        <h2>
+          <a href="/city/<%= city.city_id %>"><%= city.city_name %></a>
+        </h2>
+        <div class="image-container">
+          <img src="<%= city.city_image_url %>" alt="City Image" />
         </div>
       </section>
       <% }) %>

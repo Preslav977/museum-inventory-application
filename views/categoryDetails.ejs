@@ -13,15 +13,15 @@
     <main class="museum-main">
       <% category.forEach(categoryObj => { %>
       <section class="museum-section">
-        <div>
+        <li>
           <a href="/category/<%= categoryObj.category_id %>/delete"
             >Delete Category</a
           >
           <a href="/category/<%= categoryObj.category_id %>/update"
             >Update Category</a
           >
-        </div>
-        <p><%= categoryObj.category_name %></p>
+        </li>
+        <h2><%= categoryObj.category_name %></h2>
       </section>
       <% }) %>
     </main>

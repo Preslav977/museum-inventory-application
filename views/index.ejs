@@ -9,18 +9,22 @@
   <body>
     <%- include('navbar') %>
 
+    <h1 class="centered-header">Welcome to Dashboard!</h1>
+
     <main class="museum-main">
       <% museumsInformation.forEach(museum => { %>
       <section class="museum-section">
-        <h1><%= museum.name %></h1>
+        <h2><%= museum.name %></h2>
         <p class="museum-history"><%= museum.history %></p>
-        <a href="/category/<%= museum.category_id %>"
-          ><%= museum.category_name %></a
-        >
+        <li>
+          <a href="/category/<%= museum.category_id %>"
+            >Category: <%= museum.category_name %></a
+          >
+        </li>
         <div class="image-container">
-          <img src="<%= museum.image_url %>" alt="Museum" />
+          <img src="<%= museum.image_url %>" alt="Museum Image" />
         </div>
-        <p><%= museum.city_name %></p>
+        <p>City: <%= museum.city_name %></p>
         <li>
           <a href="/museum/<%= museum.id %>">More detail</a>
         </li>

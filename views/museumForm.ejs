@@ -20,12 +20,11 @@
         </div>
         <div class="form-content">
           <label for="history">History</label>
-          <input
-            type="text"
-            name="history"
-            id="history"
-            value="<%= museum.history %>"
-          />
+          <div>
+            <textarea name="history" id="history" rows="5" cols="34">
+              <%= museum.history %>
+            </textarea>
+          </div>
         </div>
         <div class="form-content">
           <label for="image_url">Museum Image</label>
@@ -47,6 +46,7 @@
           </select>
         </div>
         <div class="form-content">
+          <label for="city_id"></label>
           <select name="city_id" id="city_id">
             <option value="">--Select city--</option>
             <% cities.forEach(city => { %>
@@ -55,7 +55,7 @@
           </select>
         </div>
         <div class="form-btn">
-          <button type="submit">Submit</button>
+          <button class="delete-btn" type="submit">Submit</button>
         </div>
         <div><%- include('./partials/error.ejs') %></div>
       </form>
@@ -69,7 +69,9 @@
         </div>
         <div class="form-content">
           <label for="history">History</label>
-          <input type="text" name="history" id="history" />
+          <div>
+            <textarea name="history" id="history" rows="5" cols="34"></textarea>
+          </div>
         </div>
         <div class="form-content">
           <label for="image_url">Museum Image</label>
@@ -86,6 +88,7 @@
           </select>
         </div>
         <div class="form-content">
+          <label for="city_id"></label>
           <select name="city_id" id="city_id">
             <option value="" selected>--Select city--</option>
             <% cities.forEach(city => { %>
@@ -94,7 +97,7 @@
           </select>
         </div>
         <div class="form-btn">
-          <button type="submit">Submit</button>
+          <button class="delete-btn" type="submit">Submit</button>
         </div>
         <div><%- include('./partials/error.ejs') %></div>
       </form>

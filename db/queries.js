@@ -2,8 +2,10 @@ const pool = require("./pool");
 
 async function getAll() {
   const { rows } = await pool.query(
-    "SELECT * FROM museum LEFT JOIN category ON(id=category.category_id) LEFT JOIN city ON(id=city.city_id)"
+    "SELECT * FROM museum RIGHT JOIN category ON museum.category_id=category.category_id "
   );
+
+  console.log(rows);
 
   return rows;
 }
@@ -15,7 +17,13 @@ async function getMuseumList() {
 }
 
 async function getMuseumDetail(id) {
-  const { rows } = await pool.query("SELECT * FROM museum WHERE id = $1", [id]);
+  const { rows } = await pool.query("SELECT * FROM museum WHERE id = ($1)", [
+    id,
+  ]);
+
+  console.log(rows);
+
+  console.log(id);
 
   return rows;
 }
@@ -35,10 +43,12 @@ async function postCreateMuseum(
   category_id,
   city_id
 ) {
-  await pool.query(
+  const { rows } = await pool.query(
     "INSERT INTO museum (name, history, image_url, category_id, city_id) VALUES ($1, $2, $3, $4, $5)",
     [name, history, image_url, category_id, city_id]
   );
+
+  return rows;
 }
 
 async function checkIfMuseumHasAnyRelationships(id) {

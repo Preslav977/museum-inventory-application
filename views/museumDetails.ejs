@@ -12,14 +12,14 @@
     <main class="museum-main">
       <% museum.forEach(museumObj => { %>
       <section class="museum-section">
-        <div>
+        <li>
           <a href="/museum/<%= museumObj.id %>/delete">Delete Museum</a>
           <a href="/museum/<%= museumObj.id %>/update">Update Museum</a>
-        </div>
-        <h1><%= museumObj.name %></h1>
+        </li>
+        <h2><%= museumObj.name %></h2>
         <p><%= museumObj.history %></p>
         <div class="image-container">
-          <img src="<%= museumObj.image_url %>" alt="Museum" />
+          <img src="<%= museumObj.image_url %>" alt="Museum Image" />
         </div>
       </section>
       <% }) %>

@@ -18,6 +18,8 @@ exports.getMuseumList = asyncHandler(async (req, res, next) => {
 exports.getMuseumDetail = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
+  console.log(id);
+
   const getMuseum = await db.getMuseumDetail(id);
 
   if (getMuseum.length === 0) {
@@ -64,20 +66,12 @@ const validateMuseumHistory = body("history")
   .withMessage(`Museum history ${museumHistoryLengthErr}`);
 
 const validateMuseumCategory = body("category_id")
-  .trim()
-  .isNumeric()
-  .withMessage(`Museum category ${museumCategory}`)
-  .trim()
   .notEmpty()
-  .withMessage("Category must not be empty");
+  .withMessage("Category must be selected");
 
 const validateMuseumCity = body("city_id")
-  .trim()
-  .isNumeric()
-  .withMessage(`Museum city ${museumCategory}`)
-  .trim()
   .notEmpty()
-  .withMessage("City must not be empty");
+  .withMessage("City must be selected");
 
 exports.postMuseumCreate = [
   validateMuseumName,
@@ -118,6 +112,9 @@ exports.postMuseumCreate = [
         category_id,
         city_id
       );
+
+      console.log(postMuseum);
+
       res.redirect("/museum");
     }
   }),
@@ -146,10 +143,16 @@ exports.postMuseumDelete = asyncHandler(async (req, res, next) => {
     id
   );
 
+  console.log(id);
+
+  console.log(checkMuseumRelationships);
+
   if (checkMuseumRelationships.length !== 0) {
     res.send("You need to delete category and city first!");
   } else {
     const deleteMuseum = await db.deleteMuseumIfNoRelationships(id);
+
+    console.log(deleteMuseum);
 
     res.redirect("/museum");
   }

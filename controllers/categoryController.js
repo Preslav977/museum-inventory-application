@@ -20,8 +20,6 @@ exports.getCategoryList = asyncHandler(async (req, res, next) => {
 exports.getCategoryDetail = asyncHandler(async (req, res, next) => {
   const { category_id } = req.params;
 
-  console.log(category_id);
-
   const getCategory = await db.getCategoryDetail(category_id);
 
   if (getCategory.length === 0) {
@@ -100,8 +98,6 @@ exports.getCategoryDelete = asyncHandler(async (req, res, next) => {
 
 exports.postCategoryDelete = asyncHandler(async (req, res, next) => {
   const { category_id } = req.params;
-
-  console.log(category_id);
 
   const deleteCategory = await db.postDeleteCategory(category_id);
 

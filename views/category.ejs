@@ -12,9 +12,11 @@
     <main class="museum-main">
       <% categories.forEach(category => { %>
       <section class="museum-section">
-        <a href="/category/<%= category.category_id %>"
-          ><%= category.category_name %></a
-        >
+        <h2>
+          <a href="/category/<%= category.category_id %>"
+            ><%= category.category_name %></a
+          >
+        </h2>
       </section>
       <% }) %>
     </main>

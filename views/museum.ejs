@@ -7,17 +7,19 @@
     <title>Museum Inventory Application</title>
   </head>
   <body>
-    <%- include('navbar', {links: links}) %> <% if (locals.museums) { %>
+    <%- include('navbar') %> <% if (locals.museums) { %>
+    <h1 class="centered-header">All museums</h1>
+
     <main class="museum-main">
       <% museums.forEach(museum => { %>
       <section class="museum-section">
-        <h1><%= museum.name %></h1>
+        <h2><%= museum.name %></h2>
         <p><%= museum.history %></p>
         <div class="image-container">
-          <img src="<%= museum.image_url %>" alt="Museum" />
+          <img src="<%= museum.image_url %>" alt="Museum Image" />
         </div>
         <li>
-          <a href="/museum/<%= museum.id %>">More detail</a>
+          <a href="/museum/<%= museum.id %>">More details</a>
         </li>
       </section>
       <% }) %>
