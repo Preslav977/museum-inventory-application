@@ -134,7 +134,10 @@ exports.getMuseumDelete = asyncHandler(async (req, res, next) => {
     res.status(404).send("Museum not found");
     return;
   } else {
-    res.send(getMuseum);
+    res.render("museumDelete", {
+      links: links,
+      museum: getMuseum,
+    });
   }
 });
 
@@ -150,7 +153,7 @@ exports.postMuseumDelete = asyncHandler(async (req, res, next) => {
   } else {
     const deleteMuseum = await db.deleteMuseumIfNoRelationships(id);
 
-    res.send("Museum has been deleted");
+    res.redirect("/museum");
   }
 });
 
