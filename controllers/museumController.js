@@ -9,8 +9,6 @@ const asyncHandler = require("express-async-handler");
 exports.getMuseumList = asyncHandler(async (req, res, next) => {
   const getMuseums = await db.getMuseumList();
 
-  console.log(getMuseums);
-
   res.render("museum", {
     museums: getMuseums,
     links: links,
@@ -20,11 +18,7 @@ exports.getMuseumList = asyncHandler(async (req, res, next) => {
 exports.getMuseumDetail = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  console.log(typeof id);
-
   const getMuseum = await db.getMuseumDetail(id);
-
-  console.log(getMuseum);
 
   if (getMuseum.length === 0) {
     res.status(404).send("Museum not found");
@@ -87,9 +81,8 @@ exports.postMuseumCreate = [
     const { name, history, image_url, category_id, city_id } = req.body;
 
     const museumCategories = await db.getCategoryList();
-    const museumCities = await db.getCityList();
 
-    console.log(name, history, image_url, category_id, city_id);
+    const museumCities = await db.getCityList();
 
     const errors = validationResult(req);
 
@@ -151,8 +144,6 @@ exports.postMuseumDelete = asyncHandler(async (req, res, next) => {
   } else {
     const deleteMuseum = await db.deleteMuseumIfNoRelationships(id);
 
-    console.log(deleteMuseum);
-
     res.redirect("/museum");
   }
 });
@@ -169,7 +160,7 @@ exports.getMuseumUpdate = asyncHandler(async (req, res, next) => {
     res.status(404).send("Museum not found");
     return;
   } else {
-    res.render("museumForm", {
+    res.render("museumUpdate", {
       links: links,
       museums: getMuseum,
       categories: museumCategories,
@@ -186,9 +177,11 @@ exports.postMuseumUpdate = [
   asyncHandler(async (req, res, next) => {
     const { name, history, image_url, category_id, city_id } = req.body;
 
-    const { id } = req.params;
+    const museumCategories = await db.getCategoryList();
 
-    console.log(name, history, image_url, category_id, city_id, id);
+    const museumCities = await db.getCityList();
+
+    const { id } = req.params;
 
     const errors = validationResult(req);
 
@@ -198,8 +191,16 @@ exports.postMuseumUpdate = [
       (museum) => museum.name === name
     );
 
+    const getMuseum = await db.getMuseumDetail(id);
+
     if (!errors.isEmpty()) {
-      res.status(400).send(errors.array());
+      res.status(400).render("museumUpdate", {
+        museum: getMuseum,
+        links: links,
+        errors: errors.array(),
+        categories: museumCategories,
+        cities: museumCities,
+      });
     } else {
       if (findMuseumIfExists) {
         res.send("Museum with that name already exists");

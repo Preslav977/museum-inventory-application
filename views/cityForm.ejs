@@ -13,7 +13,7 @@
 
     <% if (locals.cities) { %> <% cities.forEach(city => { %>
     <div class="form-container">
-      <form action="/city/create" method="POST">
+      <form action="/city/<%= city.city_id %>/update" method="POST">
         <div class="form-content">
           <label for="city_name">City Name</label>
           <input

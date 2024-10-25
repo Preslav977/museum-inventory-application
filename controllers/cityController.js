@@ -142,7 +142,7 @@ exports.postCityUpdate = [
           city_id
         );
 
-        res.send("City has been updated");
+        res.redirect("/city");
       }
     }
   }),

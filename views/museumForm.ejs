@@ -11,29 +11,22 @@
 
     <h1 class="centered-header">Create museum</h1>
 
-    <% if (locals.museums) { %> <% museums.forEach(museum => { %>
     <div class="form-container">
       <form action="/museum/create" method="POST">
         <div class="form-content">
           <label for="name">Museum Name</label>
-          <input type="text" name="name" id="name" value="<%= museum.name %>" />
+          <input type="text" name="name" id="name" />
         </div>
         <div class="form-content">
           <label for="history">History</label>
           <div>
             <textarea name="history" id="history" rows="5" cols="34">
-              <%= museum.history %>
             </textarea>
           </div>
         </div>
         <div class="form-content">
           <label for="image_url">Museum Image</label>
-          <input
-            type="text"
-            name="image_url"
-            id="image_url"
-            value="<%= museum.image_url %>"
-          />
+          <input type="text" name="image_url" id="image_url" />
         </div>
         <div class="form-content">
           <select name="category_id" id="category_id">
@@ -60,48 +53,5 @@
         <div><%- include('./partials/error.ejs') %></div>
       </form>
     </div>
-    <% }) %> <% } else { %>
-    <div class="form-container">
-      <form action="/museum/create" method="POST">
-        <div class="form-content">
-          <label for="name">Museum Name</label>
-          <input type="text" name="name" id="name" />
-        </div>
-        <div class="form-content">
-          <label for="history">History</label>
-          <div>
-            <textarea name="history" id="history" rows="5" cols="34"></textarea>
-          </div>
-        </div>
-        <div class="form-content">
-          <label for="image_url">Museum Image</label>
-          <input type="text" name="image_url" id="image_url" />
-        </div>
-        <div class="form-content">
-          <select name="category_id" id="category_id">
-            <option value="">--Select category--</option>
-            <% categories.forEach(category => { %>
-            <option value="<%= category.category_id %>">
-              <%= category.category_name %>
-            </option>
-            <% }) %>
-          </select>
-        </div>
-        <div class="form-content">
-          <label for="city_id"></label>
-          <select name="city_id" id="city_id">
-            <option value="" selected>--Select city--</option>
-            <% cities.forEach(city => { %>
-            <option value="<%= city.city_id %>"><%= city.city_name %></option>
-            <% }) %>
-          </select>
-        </div>
-        <div class="form-btn">
-          <button class="delete-btn" type="submit">Submit</button>
-        </div>
-        <div><%- include('./partials/error.ejs') %></div>
-      </form>
-    </div>
-    <% } %>
   </body>
 </html>

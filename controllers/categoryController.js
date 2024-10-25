@@ -9,8 +9,6 @@ const links = require("../middlewareArrays/links");
 exports.getCategoryList = asyncHandler(async (req, res, next) => {
   const getCategories = await db.getCategoryList();
 
-  console.log(getCategories);
-
   res.render("category", {
     categories: getCategories,
     links: links,

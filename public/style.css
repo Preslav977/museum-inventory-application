@@ -116,3 +116,8 @@ form {
   text-align: center;
   color: red;
 }
+
+textarea {
+  resize: vertical;
+  cursor: pointer;
+}
