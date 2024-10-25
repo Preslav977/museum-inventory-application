@@ -5,12 +5,16 @@ const links = require("../middlewareArrays/links");
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  const getMuseumCategoryAndCityInfo = await db.getAll();
+  const getMuseums = await db.getMuseumList();
 
-  console.log(getMuseumCategoryAndCityInfo);
+  const getCategories = await db.getCategoryList();
 
-  // res.render("index", {
-  //   museumsInformation: getMuseumCategoryAndCityInfo,
-  //   links: links,
-  // });
+  const getCities = await db.getCityList();
+
+  res.render("index", {
+    museumsInformation: getMuseums,
+    categoriesInformation: getCategories,
+    citiesInformation: getCities,
+    links: links,
+  });
 });

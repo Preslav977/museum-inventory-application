@@ -9,6 +9,8 @@ const asyncHandler = require("express-async-handler");
 exports.getMuseumList = asyncHandler(async (req, res, next) => {
   const getMuseums = await db.getMuseumList();
 
+  console.log(getMuseums);
+
   res.render("museum", {
     museums: getMuseums,
     links: links,
@@ -18,17 +20,19 @@ exports.getMuseumList = asyncHandler(async (req, res, next) => {
 exports.getMuseumDetail = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  console.log(id);
+  console.log(typeof id);
 
   const getMuseum = await db.getMuseumDetail(id);
+
+  console.log(getMuseum);
 
   if (getMuseum.length === 0) {
     res.status(404).send("Museum not found");
     return;
   } else {
     res.render("museumDetails", {
-      museum: getMuseum,
       links: links,
+      museum: getMuseum,
     });
   }
 });
@@ -47,7 +51,6 @@ exports.getMuseumCreate = asyncHandler(async (req, res, next) => {
 const alphaErr = "must contain only letters.";
 const museumNameLengthErr = "must be between 1 and 30 characters.";
 const museumHistoryLengthErr = "must be between 1 and 255 characters";
-const museumCategory = "must contain only numbers.";
 
 const validateMuseumName = body("name")
   .trim()
@@ -70,6 +73,7 @@ const validateMuseumCategory = body("category_id")
   .withMessage("Category must be selected");
 
 const validateMuseumCity = body("city_id")
+  .trim()
   .notEmpty()
   .withMessage("City must be selected");
 
@@ -78,6 +82,7 @@ exports.postMuseumCreate = [
   validateMuseumHistory,
   validateMuseumCategory,
   validateMuseumCity,
+
   asyncHandler(async (req, res, next) => {
     const { name, history, image_url, category_id, city_id } = req.body;
 
@@ -113,8 +118,6 @@ exports.postMuseumCreate = [
         city_id
       );
 
-      console.log(postMuseum);
-
       res.redirect("/museum");
     }
   }),
@@ -142,10 +145,6 @@ exports.postMuseumDelete = asyncHandler(async (req, res, next) => {
   const checkMuseumRelationships = await db.checkIfMuseumHasAnyRelationships(
     id
   );
-
-  console.log(id);
-
-  console.log(checkMuseumRelationships);
 
   if (checkMuseumRelationships.length !== 0) {
     res.send("You need to delete category and city first!");
