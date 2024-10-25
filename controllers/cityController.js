@@ -108,7 +108,10 @@ exports.getCityUpdate = asyncHandler(async (req, res, next) => {
   if (getCity.length === 0) {
     res.send("City not found");
   } else {
-    res.send(getCity);
+    res.render("cityForm", {
+      links: links,
+      cities: getCity,
+    });
   }
 });
 
