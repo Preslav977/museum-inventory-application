@@ -117,7 +117,10 @@ exports.getCategoryUpdate = asyncHandler(async (req, res, next) => {
     res.status(404).send("Category not found");
     return;
   } else {
-    res.send(getCategory);
+    res.render("categoryForm", {
+      links: links,
+      categories: getCategory,
+    });
   }
 });
 
@@ -140,14 +143,14 @@ exports.postCategoryUpdate = [
       return res.status(400).send(errors.array());
     } else {
       if (findCategoryIfExists) {
-        res.send("Category  with that name already exists.");
+        res.send("Category with that name already exists.");
       } else {
         const updateCategory = await db.postUpdateCategory(
           category_name,
           category_id
         );
 
-        res.send("Category has been updated");
+        res.redirect("/category");
       }
     }
   }),

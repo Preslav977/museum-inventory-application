@@ -211,7 +211,7 @@ exports.postMuseumUpdate = [
           id
         );
 
-        res.send("Museum has been updated");
+        res.redirect("/museum");
       }
     }
   }),
