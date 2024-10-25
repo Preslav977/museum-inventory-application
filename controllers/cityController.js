@@ -85,7 +85,10 @@ exports.getCityDelete = asyncHandler(async (req, res, next) => {
   if (getCity.length === 0) {
     res.send("City not found");
   } else {
-    res.send(getCity);
+    res.render("cityDelete", {
+      links: links,
+      city: getCity,
+    });
   }
 });
 
@@ -94,7 +97,7 @@ exports.postCityDelete = asyncHandler(async (req, res, next) => {
 
   const deleteCity = await db.postDeleteCity(city_id);
 
-  res.send("City has been deleted.");
+  res.redirect("/city");
 });
 
 exports.getCityUpdate = asyncHandler(async (req, res, next) => {
