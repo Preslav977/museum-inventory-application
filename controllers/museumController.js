@@ -32,7 +32,16 @@ exports.getMuseumDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMuseumCreate = asyncHandler(async (req, res, next) => {
-  res.render("museumForm");
+  const museumCategories = await db.getCategoryList();
+  const museumCities = await db.getCityList();
+
+  console.log(museumCities);
+
+  res.render("museumForm", {
+    links: links,
+    categories: museumCategories,
+    cities: museumCities,
+  });
 });
 
 const alphaErr = "must contain only letters.";
@@ -80,6 +89,9 @@ exports.postMuseumCreate = [
   asyncHandler(async (req, res, next) => {
     const { name, history, image_url, category_id, city_id } = req.body;
 
+    const museumCategories = await db.getCategoryList();
+    const museumCities = await db.getCityList();
+
     console.log(name, history, image_url, category_id, city_id);
 
     const errors = validationResult(req);
@@ -91,7 +103,12 @@ exports.postMuseumCreate = [
     );
 
     if (!errors.isEmpty()) {
-      res.status(400).send(errors.array());
+      res.status(400).render("museumForm", {
+        links: links,
+        errors: errors.array(),
+        categories: museumCategories,
+        cities: museumCities,
+      });
     } else {
       if (findMuseumIfExists) {
         return res.send("Museum with that name already exists");
@@ -103,7 +120,7 @@ exports.postMuseumCreate = [
         category_id,
         city_id
       );
-      return res.send("Museum has been created.");
+      res.redirect("/museum");
     }
   }),
 ];
