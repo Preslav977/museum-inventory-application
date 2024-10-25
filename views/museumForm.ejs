@@ -11,6 +11,56 @@
 
     <h1 class="centered-header">Create museum</h1>
 
+    <% if (locals.museums) { %> <% museums.forEach(museum => { %>
+    <div class="form-container">
+      <form action="/museum/create" method="POST">
+        <div class="form-content">
+          <label for="name">Museum Name</label>
+          <input type="text" name="name" id="name" value="<%= museum.name %>" />
+        </div>
+        <div class="form-content">
+          <label for="history">History</label>
+          <input
+            type="text"
+            name="history"
+            id="history"
+            value="<%= museum.history %>"
+          />
+        </div>
+        <div class="form-content">
+          <label for="image_url">Museum Image</label>
+          <input
+            type="text"
+            name="image_url"
+            id="image_url"
+            value="<%= museum.image_url %>"
+          />
+        </div>
+        <div class="form-content">
+          <select name="category_id" id="category_id">
+            <option value="">--Select category--</option>
+            <% categories.forEach(category => { %>
+            <option value="<%= category.category_id %>">
+              <%= category.category_name %>
+            </option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-content">
+          <select name="city_id" id="city_id">
+            <option value="">--Select city--</option>
+            <% cities.forEach(city => { %>
+            <option value="<%= city.city_id %>"><%= city.city_name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-btn">
+          <button type="submit">Submit</button>
+        </div>
+        <div><%- include('./partials/error.ejs') %></div>
+      </form>
+    </div>
+    <% }) %> <% } else { %>
     <div class="form-container">
       <form action="/museum/create" method="POST">
         <div class="form-content">
@@ -27,6 +77,7 @@
         </div>
         <div class="form-content">
           <select name="category_id" id="category_id">
+            <option value="">--Select category--</option>
             <% categories.forEach(category => { %>
             <option value="<%= category.category_id %>">
               <%= category.category_name %>
@@ -36,6 +87,7 @@
         </div>
         <div class="form-content">
           <select name="city_id" id="city_id">
+            <option value="" selected>--Select city--</option>
             <% cities.forEach(city => { %>
             <option value="<%= city.city_id %>"><%= city.city_name %></option>
             <% }) %>
@@ -47,5 +99,6 @@
         <div><%- include('./partials/error.ejs') %></div>
       </form>
     </div>
+    <% } %>
   </body>
 </html>

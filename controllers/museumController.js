@@ -160,13 +160,21 @@ exports.postMuseumDelete = asyncHandler(async (req, res, next) => {
 exports.getMuseumUpdate = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
+  const museumCategories = await db.getCategoryList();
+  const museumCities = await db.getCityList();
+
   const getMuseum = await db.getMuseumDetail(id);
 
   if (getMuseum.length === 0) {
     res.status(404).send("Museum not found");
     return;
   } else {
-    res.send(getMuseum);
+    res.render("museumForm", {
+      links: links,
+      museums: getMuseum,
+      categories: museumCategories,
+      cities: museumCities,
+    });
   }
 });
 
