@@ -35,8 +35,6 @@ exports.getMuseumCreate = asyncHandler(async (req, res, next) => {
   const museumCategories = await db.getCategoryList();
   const museumCities = await db.getCityList();
 
-  console.log(museumCities);
-
   res.render("museumForm", {
     links: links,
     categories: museumCategories,

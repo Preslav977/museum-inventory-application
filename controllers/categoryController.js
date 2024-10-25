@@ -91,7 +91,10 @@ exports.getCategoryDelete = asyncHandler(async (req, res, next) => {
     res.status(404).send("Category not found");
     return;
   } else {
-    res.send(getCategory);
+    res.render("categoryDelete", {
+      category: getCategory,
+      links: links,
+    });
   }
 });
 
@@ -102,7 +105,7 @@ exports.postCategoryDelete = asyncHandler(async (req, res, next) => {
 
   const deleteCategory = await db.postDeleteCategory(category_id);
 
-  res.send("Category has been deleted.");
+  res.redirect("/category");
 });
 
 exports.getCategoryUpdate = asyncHandler(async (req, res, next) => {
