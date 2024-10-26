@@ -77,10 +77,7 @@ async function checkIfMuseumHasAnyRelationships(id) {
 
 async function deleteMuseumIfNoRelationships(id) {
   try {
-    await pool.query(
-      "DELETE FROM museum WHERE id = $1 AND category_id IS NULL OR city_id IS NULL",
-      [id]
-    );
+    await pool.query("DELETE FROM museum WHERE id = $1", [id]);
   } catch (err) {
     console.error("Error deleting museum by ID", err);
     throw err;

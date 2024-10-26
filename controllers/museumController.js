@@ -56,8 +56,8 @@ const validateMuseumName = body("name")
 
 const validateMuseumHistory = body("history")
   .trim()
-  .isAlpha()
-  .withMessage(`Museum history ${alphaErr}`)
+  // .isAlpha()
+  // .withMessage(`Museum history ${alphaErr}`)
   .isLength({ min: 1, max: 255 })
   .escape()
   .withMessage(`Museum history ${museumHistoryLengthErr}`);

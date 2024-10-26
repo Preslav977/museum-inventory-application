@@ -8,6 +8,7 @@
 
 a {
   text-decoration: none;
+  color: #fcf8ff;
 }
 
 li {
@@ -15,7 +16,7 @@ li {
 }
 
 a:visited {
-  color: black;
+  color: #fcf8ff;
 }
 
 .navbar {
@@ -48,6 +49,8 @@ a:visited {
   flex-direction: column;
   gap: 0.5rem;
   text-align: center;
+  background-color: #4ffbdf;
+  color: #fcf8ff;
 }
 
 img {
@@ -70,6 +73,7 @@ img {
 
 .centered-header {
   text-align: center;
+  color: #fcf8ff;
 }
 
 .form-container {
@@ -120,4 +124,12 @@ form {
 textarea {
   resize: vertical;
   cursor: pointer;
+}
+
+body {
+  background-color: #00d2fc;
+}
+
+form label {
+  color: #fcf8ff;
 }

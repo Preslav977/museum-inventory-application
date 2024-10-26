@@ -9,7 +9,7 @@
   <body>
     <%- include('navbar') %>
 
-    <h1 class="centered-header">Create city</h1>
+    <h1 class="centered-header">Update city</h1>
 
     <% if (locals.cities) { %> <% cities.forEach(city => { %>
     <div class="form-container">
@@ -39,6 +39,8 @@
       </form>
     </div>
     <% }) %> <% } else { %>
+    <h1 class="centered-header">Create city</h1>
+
     <div class="form-container">
       <form action="/city/create" method="POST">
         <div class="form-content">

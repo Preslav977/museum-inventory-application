@@ -9,7 +9,7 @@
   <body>
     <%- include('navbar') %>
 
-    <h1 class="centered-header">Create category</h1>
+    <h1 class="centered-header">Update category</h1>
 
     <% if (locals.categories) { %> <% categories.forEach(category => { %>
     <div class="form-container">
@@ -31,6 +31,8 @@
     </div>
 
     <% }) %> <% } else { %>
+    <h1 class="centered-header">Create category</h1>
+
     <div class="form-container">
       <form action="/category/create" method="POST">
         <div class="form-content">
