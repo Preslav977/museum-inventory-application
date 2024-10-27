@@ -44,7 +44,7 @@ exports.getMuseumCreate = asyncHandler(async (req, res, next) => {
 
 const alphaErr = "must contain only letters.";
 const museumNameLengthErr = "must be between 1 and 30 characters.";
-const museumHistoryLengthErr = "must be between 1 and 255 characters";
+const museumHistoryLengthErr = "must be between 1 and 600 characters";
 
 const validateMuseumName = body("name")
   .trim()
@@ -58,7 +58,7 @@ const validateMuseumHistory = body("history")
   .trim()
   // .isAlpha()
   // .withMessage(`Museum history ${alphaErr}`)
-  .isLength({ min: 1, max: 255 })
+  .isLength({ min: 1, max: 600 })
   .escape()
   .withMessage(`Museum history ${museumHistoryLengthErr}`);
 
@@ -111,7 +111,10 @@ exports.postMuseumCreate = [
         city_id
       );
 
-      res.redirect("/museum");
+      res.redirect("museumDetails", {
+        links: links,
+        museum: postMuseum,
+      });
     }
   }),
 ];
@@ -202,20 +205,19 @@ exports.postMuseumUpdate = [
         cities: museumCities,
       });
     } else {
-      if (findMuseumIfExists) {
-        res.send("Museum with that name already exists");
-      } else {
-        const updateMuseum = await db.postUpdateMuseum(
-          name,
-          history,
-          image_url,
-          category_id,
-          city_id,
-          id
-        );
+      const updateMuseum = await db.postUpdateMuseum(
+        name,
+        history,
+        image_url,
+        category_id,
+        city_id,
+        id
+      );
 
-        res.redirect("/museum");
-      }
+      res.render("museumDetails", {
+        links: links,
+        museum: updateMuseum,
+      });
     }
   }),
 ];

@@ -68,12 +68,14 @@ exports.postCategoryCreate = [
     } else {
       if (findCategoryIfExists) {
         return res.send("Category with that name already exists");
+      } else {
+        const postCategory = await db.postCreateCategory(category_name);
+
+        res.render("categoryDetails", {
+          links: links,
+          category: postCategory,
+        });
       }
-      const postCategory = await db.postCreateCategory(category_name);
-
-      res.redirect("/category");
-
-      return;
     }
   }),
 ];
@@ -134,18 +136,20 @@ exports.postCategoryUpdate = [
     );
 
     if (!errors.isEmpty()) {
-      return res.status(400).send(errors.array());
+      return res.status(400).render("categoryForm", {
+        links: links,
+        errors: errors.array(),
+      });
     } else {
-      if (findCategoryIfExists) {
-        res.send("Category with that name already exists.");
-      } else {
-        const updateCategory = await db.postUpdateCategory(
-          category_name,
-          category_id
-        );
+      const updateCategory = await db.postUpdateCategory(
+        category_name,
+        category_id
+      );
 
-        res.redirect("/category");
-      }
+      res.render("categoryDetails", {
+        links: links,
+        category: updateCategory,
+      });
     }
   }),
 ];

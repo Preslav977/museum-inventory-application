@@ -48,8 +48,11 @@ const validateCityName = body("city_name")
   .escape()
   .withMessage(`City name ${lengthErr}`);
 
+const validateCityImageURL = body("city_image_url").trim();
+
 exports.postCityCreate = [
   validateCityName,
+  validateCityImageURL,
   asyncHandler(async (req, res, next) => {
     const { city_name, city_image_url } = req.body;
 
@@ -69,10 +72,16 @@ exports.postCityCreate = [
     } else {
       if (findCityIfExists) {
         return res.send("City with that name already exists.");
-      }
-      const postCity = await db.postCreateCity(city_name, city_image_url);
+      } else {
+        const postCity = await db.postCreateCity(city_name, city_image_url);
 
-      return res.redirect("/city");
+        console.log(postCity);
+
+        res.render("cityDetails", {
+          links: links,
+          city: postCity,
+        });
+      }
     }
   }),
 ];
@@ -117,6 +126,7 @@ exports.getCityUpdate = asyncHandler(async (req, res, next) => {
 
 exports.postCityUpdate = [
   validateCityName,
+  validateCityImageURL,
   asyncHandler(async (req, res, next) => {
     const { city_name, city_image_url } = req.body;
 
@@ -131,19 +141,21 @@ exports.postCityUpdate = [
     );
 
     if (!errors.isEmpty()) {
-      return res.status(400).send(errors.array());
+      return res.status(400).render("cityForm", {
+        links: links,
+        errors: errors.array(),
+      });
     } else {
-      if (findCityIfExists) {
-        return res.send("City with that name already exists.");
-      } else {
-        const updateCity = await db.postUpdateCity(
-          city_name,
-          city_image_url,
-          city_id
-        );
+      const updateCity = await db.postUpdateCity(
+        city_name,
+        city_image_url,
+        city_id
+      );
 
-        res.redirect("/city");
-      }
+      res.render("cityDetails", {
+        links: links,
+        city: updateCity,
+      });
     }
   }),
 ];

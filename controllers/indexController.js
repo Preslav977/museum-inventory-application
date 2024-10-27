@@ -11,12 +11,6 @@ exports.index = asyncHandler(async (req, res, next) => {
 
   const getCities = await db.getCityList();
 
-  console.log(getMuseums);
-
-  console.log(getCategories);
-
-  console.log(getCities);
-
   res.render("index", {
     museumsInformation: getMuseums,
     categoriesInformation: getCategories,

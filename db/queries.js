@@ -46,12 +46,12 @@ async function postCreateMuseum(
   city_id
 ) {
   try {
-    const { rows } = await pool.query(
-      "INSERT INTO museum (name, history, image_url, category_id, city_id) VALUES ($1, $2, $3, $4, $5)",
+    const query = await pool.query(
+      "INSERT INTO museum (name, history, image_url, category_id, city_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [name, history, image_url, category_id, city_id]
     );
 
-    return rows;
+    return query.rows;
   } catch (err) {
     console.error("Error inserting a row into museum table", err);
     throw err;
@@ -93,10 +93,12 @@ async function postUpdateMuseum(
   id
 ) {
   try {
-    await pool.query(
-      "UPDATE museum SET name = $1, history = $2, image_url = $3, category_id = $4, city_id = $5 WHERE id = $6 AND category_id IS NOT NULL AND city_id IS NOT NULL",
+    const query = await pool.query(
+      "UPDATE museum SET name = $1, history = $2, image_url = $3, category_id = $4, city_id = $5 WHERE id = $6 AND category_id IS NOT NULL AND city_id IS NOT NULL RETURNING *",
       [name, history, image_url, category_id, city_id, id]
     );
+
+    return query.rows;
   } catch (err) {
     console.error(
       "Error updating museum by NAME, HISTORY, IMAGE_URL, CATEGORY_ID, CITY_ID",
@@ -149,9 +151,12 @@ async function searchForCategoryIfExists(category_name) {
 
 async function postCreateCategory(category_name) {
   try {
-    await pool.query("INSERT INTO category (category_name) VALUES ($1)", [
-      category_name,
-    ]);
+    const query = await pool.query(
+      "INSERT INTO category (category_name) VALUES ($1) RETURNING *",
+      [category_name]
+    );
+
+    return query.rows;
   } catch (err) {
     console.error("Error inserting row into category table ", err);
     throw err;
@@ -171,10 +176,11 @@ async function postDeleteCategory(category_id) {
 
 async function postUpdateCategory(category_name, category_id) {
   try {
-    await pool.query(
-      "UPDATE category SET category_name = $1 WHERE category_id = $2",
+    const query = await pool.query(
+      "UPDATE category SET category_name = $1 WHERE category_id = $2 RETURNING *",
       [category_name, category_id]
     );
+    return query.rows;
   } catch (err) {
     console.error("Error updating category by NAME", err);
     throw err;
@@ -223,10 +229,12 @@ async function searchForCityIfExists(city_name) {
 
 async function postCreateCity(city_name, city_image_url) {
   try {
-    await pool.query(
-      "INSERT INTO city (city_name, city_image_url) VALUES ($1, $2)",
+    const query = await pool.query(
+      "INSERT INTO city (city_name, city_image_url) VALUES ($1, $2) RETURNING *",
       [city_name, city_image_url]
     );
+
+    return query.rows;
   } catch (err) {
     console.error("Error inserting row into city table", err);
     throw err;
@@ -244,10 +252,12 @@ async function postDeleteCity(city_id) {
 
 async function postUpdateCity(city_name, city_image_url, city_id) {
   try {
-    await pool.query(
-      "UPDATE city SET city_name = $1, city_image_url = $2 WHERE city_id = $3",
+    const query = await pool.query(
+      "UPDATE city SET city_name = $1, city_image_url = $2 WHERE city_id = $3 RETURNING *",
       [city_name, city_image_url, city_id]
     );
+
+    return query.rows;
   } catch (err) {
     console.error("Error updating city by NAME, IMG_URL ", err);
     throw err;
