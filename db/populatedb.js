@@ -31,22 +31,27 @@ INSERT INTO museum (name, history, image_url, category_id, city_id) VALUES ('Hou
 `;
 
 async function main() {
-  console.log("seeding...");
+  try {
+    console.log("seeding...");
 
-  const client = new Client({
-    connectionString: process.env.DB_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  });
+    const client = new Client({
+      connectionString: process.env.DB_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
 
-  await client.connect();
+    await client.connect();
 
-  await client.query(SQL);
+    await client.query(SQL);
 
-  await client.end();
+    await client.end();
 
-  console.log("done");
+    console.log("done");
+  } catch (err) {
+    console.error("An error occurred during seeing", err);
+    throw err;
+  }
 }
 
 main();

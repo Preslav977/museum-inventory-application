@@ -2,7 +2,7 @@ const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require("express-async-handler");
 
-const db = require("../db/queries");
+const db = require("../db/categoryQueries");
 
 const links = require("../middlewareArrays/links");
 
